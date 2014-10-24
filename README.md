@@ -1,7 +1,7 @@
 magneticScroll
 ===============
 
-This plugin offers you the possibility to add magnetic scrolling to your website.
+This jQuery plugin offers you the possibility to add magnetic scrolling to your website.
 You can easily configure the elements on which the plugin act.
 
 
@@ -14,6 +14,16 @@ Features
 * No javascript skills are required
 * Mouse scroll magnetism
 * Arrows scroll magnetism
+
+
+How to use
+-------
+
+* Add the script to your page
+* Insert into your script: $.magneticScroll();
+* And Voila !
+* You can configure the options below
+
 
 Options
 -------
