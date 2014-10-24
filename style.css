@@ -1,0 +1,98 @@
+@import url(http://fonts.googleapis.com/css?family=Pacifico|Open+Sans);
+
+body {
+  font-size: 15px;
+  margin: 0;
+  padding: 0;
+  color:white;
+  font-family: 'Open Sans', Helvetica, Arial, Sans-serif;
+  background: #994185; /* Old browsers */
+  background: -moz-linear-gradient(-45deg,  #994185 0%, #e63735 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, right bottom, color-stop(0%,#994185), color-stop(100%,#e63735)); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(-45deg,  #994185 0%,#e63735 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(-45deg,  #994185 0%,#e63735 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(-45deg,  #994185 0%,#e63735 100%); /* IE10+ */
+  background: linear-gradient(135deg,  #994185 0%,#e63735 100%); /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#994185', endColorstr='#e63735',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+a {
+  color:white;
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
+h1,
+h2,
+h3 {
+  font-family: 'Pacifico';
+  font-weight: normal;
+  text-align: center;
+  text-shadow: 3px 3px 0px rgba(0, 0, 0, 0.2);
+}
+h1 {
+  font-size: 3em;
+}
+h2 {
+  font-size: 2.5em;
+  margin: 0;
+}
+h3 {
+  font-size: 2em;
+  margin-bottom: 10px;
+  margin-top: 40px;
+}
+div {
+  text-align: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+  padding: 20px 0;
+}
+div.text {
+  max-width: 400px;
+  margin: 50px auto;
+  text-align: left;
+  border: none;
+}
+div.magnetic {
+  min-height: 500px;
+}
+ul {
+  margin-bottom: 30px;
+  padding-left: 10px;
+}
+code {
+  font-size: 20px;
+  margin: 50px 0;
+  font-weight:bold;
+  display:block;
+}
+pre {
+  font-size: 20px;
+  margin: 50px auto;
+  font-weight:bold;
+  display:block;
+  width: 300px;
+  text-align:left;
+}
+p {
+  max-width: 400px;
+  margin: 50px auto;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  border: 1px solid white;
+  box-shadow: 3px 3px 0px rgba(0, 0, 0, 0.1);
+}
+table th {
+  border-bottom: 1px solid white;
+}
+table th,
+table td {
+  padding: 6px 9px;
+}
+table tr:nth-child(even) {
+  background-color: rgba(255, 255, 255, 0.1);
+}
