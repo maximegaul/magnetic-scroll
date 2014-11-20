@@ -50,7 +50,7 @@ div {
   padding: 20px 0;
 }
 div.text {
-  max-width: 400px;
+  max-width: 500px;
   margin: 50px auto;
   text-align: left;
   border: none;
@@ -62,19 +62,16 @@ ul {
   margin-bottom: 30px;
   padding-left: 10px;
 }
+pre,
 code {
-  font-size: 20px;
-  margin: 50px 0;
-  font-weight:bold;
-  display:block;
-}
-pre {
-  font-size: 20px;
-  margin: 50px auto;
-  font-weight:bold;
-  display:block;
-  width: 300px;
-  text-align:left;
+  text-align: left;
+  max-width: 500px;
+  margin: 0 auto;
+  display: block;
+  padding: 20px;
+  color: #994185;
+  background-color: white;
+  box-shadow: 3px 3px 0px rgba(0, 0, 0, 0.1);
 }
 p {
   max-width: 400px;
