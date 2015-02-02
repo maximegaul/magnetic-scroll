@@ -64,8 +64,10 @@ $.fn.reverse = [].reverse;
 							}
 						}
 						else{
+							var allFinished = true;
 							$(params.selector).each(function() {
 								if($(this).attr("data-offset")>st) {
+									allFinished = false;
 									$("html, body").stop().animate({'scrollTop': $(this).attr("data-offset")+'px'}, params.speed, params.easing, function() {
 										setTimeout(function() {
 											$("html,body").stop().removeClass('scrolling');
@@ -74,6 +76,7 @@ $.fn.reverse = [].reverse;
 									return false; //break
 								}
 							});
+							if(allFinished) $("html,body").stop().removeClass('scrolling');
 						}
 
 
@@ -118,8 +121,10 @@ $.fn.reverse = [].reverse;
 
 						$("body").addClass('scrolling');
 
+						var allFinished = true;
 						$(params.selector).each(function() {
 							if($(this).attr("data-offset")>st) {
+								allFinished = false;
 								$("html, body").stop().animate({'scrollTop': $(this).attr("data-offset")+'px'}, params.speed, params.easing, function() {
 									setTimeout(function() {
 										$("html,body").stop().removeClass('scrolling');
@@ -128,6 +133,7 @@ $.fn.reverse = [].reverse;
 								return false; //break
 							}
 						});
+						if(allFinished) $("html,body").stop().removeClass('scrolling');
 					}
 				}
 
