@@ -42,7 +42,7 @@ $.fn.reverse = [].reverse;
 							if($(window).scrollTop() > 0) {
 								$(params.selector).reverse().each(function() {
 									var scrolled = 0;
-									if($(this).attr("data-offset")<st) {
+									if( Math.round($(this).attr("data-offset"))<Math.round(st)) {
 										$("html, body").stop().animate({'scrollTop': $(this).attr("data-offset")+'px'}, params.speed, params.easing, function() {
 											setTimeout(function() {
 												$("html,body").stop().removeClass('scrolling');
@@ -66,7 +66,7 @@ $.fn.reverse = [].reverse;
 						else{
 							var allFinished = true;
 							$(params.selector).each(function() {
-								if($(this).attr("data-offset")>st) {
+								if(Math.round($(this).attr("data-offset"))>Math.round(st)) {
 									allFinished = false;
 									$("html, body").stop().animate({'scrollTop': $(this).attr("data-offset")+'px'}, params.speed, params.easing, function() {
 										setTimeout(function() {
@@ -102,7 +102,7 @@ $.fn.reverse = [].reverse;
 						$("body").addClass('scrolling');
 
 						$(params.selector).reverse().each(function() {
-							if($(this).attr("data-offset")<st) {
+							if(Math.round($(this).attr("data-offset"))<Math.round(st)) {
 								$("html, body").stop().animate({'scrollTop': $(this).attr("data-offset")+'px'}, params.speed, params.easing, function() {
 									setTimeout(function() {
 										$("html,body").stop().removeClass('scrolling');
@@ -123,7 +123,7 @@ $.fn.reverse = [].reverse;
 
 						var allFinished = true;
 						$(params.selector).each(function() {
-							if($(this).attr("data-offset")>st) {
+							if(Math.round($(this).attr("data-offset"))>Math.round(st)) {
 								allFinished = false;
 								$("html, body").stop().animate({'scrollTop': $(this).attr("data-offset")+'px'}, params.speed, params.easing, function() {
 									setTimeout(function() {
