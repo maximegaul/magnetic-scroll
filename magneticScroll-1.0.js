@@ -3,7 +3,7 @@ magneticScroll v1.0
 by Maxime Gaul
 https://github.com/maximegaul/magnetic-scroll
 */
-$.fn.reverse = [].reverse;
+jQuery.fn.reverse = [].reverse;
 
 (function($)
 {
