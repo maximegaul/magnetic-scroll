@@ -54,7 +54,8 @@ jQuery.fn.reverse = [].reverse;
                 var mousewheelevt = (/Firefox/i.test(navigator.userAgent)) ? "DOMMouseScroll" : "mousewheel"; //FF doesn't recognize mousewheel as of FF3.x
 
                 $('body:not(.scrolling)').bind(mousewheelevt, function(e){
-
+                    
+                    e.preventDefault(); // fix jump on Chrome
 
                     if(!$(this).hasClass('scrolling')) {
 
