@@ -3,141 +3,169 @@ magneticScroll v1.0
 by Maxime Gaul
 https://github.com/maximegaul/magnetic-scroll
 */
+
 jQuery.fn.reverse = [].reverse;
 
 (function($)
 {
-	$.magneticScroll=function(options)
-	{
+    $.magneticScroll = function(options)
+    {
 
-			var defauts=
-			{
-				"selector": ".magnetic",
-				"easing": "swing",
-				"speed": 500,
-				"timeout": 200
-			};
+            var defauts =
+            {
+                "selector": ".magnetic",
+                "easing": "swing",
+                "speed": 500,
+                "timeout": 200,
+                beforeScroll: $.noop,
+                afterScroll: $.noop
+            };
 
-			var params=$.extend(defauts, options);
+            var params = $.extend(defauts, options);
 
-			$(document).ready(function() {
-				$(params.selector).each(function() {
-					$(this).attr("data-offset", $(this).offset().top);
-				});
+            var methods = {
 
-				var mousewheelevt = (/Firefox/i.test(navigator.userAgent)) ? "DOMMouseScroll" : "mousewheel" //FF doesn't recognize mousewheel as of FF3.x
-				$('body:not(.scrolling)').bind(mousewheelevt, function(e){
+                animateScroll: function($el, offset, direction){
 
+                    params.beforeScroll();
 
-					if(!$(this).hasClass('scrolling')) {
+                    $("html, body").stop().animate({'scrollTop': offset+'px'}, params.speed, params.easing, function() {
 
-						$(this).addClass('scrolling')
+                        setTimeout(function() {
 
-						var st = $(window).scrollTop();
-						var evt = window.event || e //equalize event object
-						evt = evt.originalEvent ? evt.originalEvent : evt; //convert to originalEvent if possible
-						var delta = evt.detail ? evt.detail*(-40) : evt.wheelDelta //check for detail first, because it is used by Opera and FF
+                            $("html,body").stop().removeClass('scrolling');
+                            params.afterScroll($el, direction);
 
-						if(delta > 0) {
-							if($(window).scrollTop() > 0) {
-								$(params.selector).reverse().each(function() {
-									var scrolled = 0;
-									if( Math.round($(this).attr("data-offset"))<Math.round(st)) {
-										$("html, body").stop().animate({'scrollTop': $(this).attr("data-offset")+'px'}, params.speed, params.easing, function() {
-											setTimeout(function() {
-												$("html,body").stop().removeClass('scrolling');
-											}, params.timeout);
-										});
-										scrolled = 1;
-										return false; //break
-									}
-									if(scrolled == 0) {
-										$("html, body").stop().animate({'scrollTop': '0px'}, params.speed, params.easing, function() {
-											setTimeout(function() {
-												$("html,body").stop().removeClass('scrolling');
-											}, params.timeout);
-										});
-									}
-								});
-							} else {
-									$("html,body").stop().removeClass('scrolling');
-							}
-						}
-						else{
-							var allFinished = true;
-							$(params.selector).each(function() {
-								if(Math.round($(this).attr("data-offset"))>Math.round(st)) {
-									allFinished = false;
-									$("html, body").stop().animate({'scrollTop': $(this).attr("data-offset")+'px'}, params.speed, params.easing, function() {
-										setTimeout(function() {
-											$("html,body").stop().removeClass('scrolling');
-										}, params.timeout);
-									});
-									return false; //break
-								}
-							});
-							if(allFinished) $("html,body").stop().removeClass('scrolling');
-						}
+                        }, params.timeout);
+
+                    });
+
+                }
+            };
+
+            $(document).ready(function() {
+
+                $(params.selector).each(function() {
+
+                    $(this).attr("data-offset", $(this).offset().top);
+
+                });
+
+                var mousewheelevt = (/Firefox/i.test(navigator.userAgent)) ? "DOMMouseScroll" : "mousewheel"; //FF doesn't recognize mousewheel as of FF3.x
+
+                $('body:not(.scrolling)').bind(mousewheelevt, function(e){
 
 
-					} else {
-						e.preventDefault();
-					}
+                    if(!$(this).hasClass('scrolling')) {
 
-					e.stopPropagation();
-					return;
+                        $(this).addClass('scrolling');
 
-				});
+                        var st = $(window).scrollTop();
+                        var evt = window.event || e; //equalize event object
+                        evt = evt.originalEvent ? evt.originalEvent : evt; //convert to originalEvent if possible
+                        var delta = evt.detail ? evt.detail*(-40) : evt.wheelDelta; //check for detail first, because it is used by Opera and FF
 
-			}).keydown(function(e) {
+                        if(delta > 0) {
 
-				var st = $(window).scrollTop();
-				var key = e.which;
+                            if($(window).scrollTop() > 0) {
 
-				if(key == 38) { //up
-					e.preventDefault();
+                                $(params.selector).reverse().each(function() {
 
-					if(!$("body").hasClass('scrolling')) {
+                                    var scrolled = 0;
 
-						$("body").addClass('scrolling');
+                                    if( Math.round($(this).attr("data-offset"))<Math.round(st)) {
 
-						$(params.selector).reverse().each(function() {
-							if(Math.round($(this).attr("data-offset"))<Math.round(st)) {
-								$("html, body").stop().animate({'scrollTop': $(this).attr("data-offset")+'px'}, params.speed, params.easing, function() {
-									setTimeout(function() {
-										$("html,body").stop().removeClass('scrolling');
-									}, params.timeout);
-								});
-								return false; //break
-							}
-						});
-					}
+                                        methods.animateScroll($(this), $(this).attr("data-offset"), 'up');
+                                        scrolled = 1;
+                                        return false; //break
+                                    }
 
-				} else if(key == 40) { //down
+                                    if(scrolled === 0) {
+                                        methods.animateScroll($(this), 0, 'up');
+                                    }
+                                });
 
-					e.preventDefault();
+                            } else {
+                                $("html,body").stop().removeClass('scrolling');
+                            }
+                        }
+                        else{
 
-					if(!$("body").hasClass('scrolling')) {
+                            var allFinished = true;
 
-						$("body").addClass('scrolling');
+                            $(params.selector).each(function() {
 
-						var allFinished = true;
-						$(params.selector).each(function() {
-							if(Math.round($(this).attr("data-offset"))>Math.round(st)) {
-								allFinished = false;
-								$("html, body").stop().animate({'scrollTop': $(this).attr("data-offset")+'px'}, params.speed, params.easing, function() {
-									setTimeout(function() {
-										$("html,body").stop().removeClass('scrolling');
-									}, params.timeout);
-								});
-								return false; //break
-							}
-						});
-						if(allFinished) $("html,body").stop().removeClass('scrolling');
-					}
-				}
+                                if(Math.round($(this).attr("data-offset"))>Math.round(st)) {
+                                    allFinished = false;
+                                    methods.animateScroll($(this), $(this).attr("data-offset"), 'down');
+                                    return false; //break
+                                }
+                            });
 
-			});
+                            if(allFinished) $("html,body").stop().removeClass('scrolling');
+                        }
 
-	};
+
+                    } else {
+                        e.preventDefault();
+                    }
+
+                    e.stopPropagation();
+                    return;
+
+                });
+
+            }).keydown(function(e) {
+
+                var st = $(window).scrollTop();
+                var key = e.which;
+
+                if(key == 38) { //up
+
+                    e.preventDefault();
+
+                    if(!$("body").hasClass('scrolling')) {
+
+                        $("body").addClass('scrolling');
+
+                        $(params.selector).reverse().each(function() {
+
+                            if(Math.round($(this).attr("data-offset"))<Math.round(st)) {
+
+                                methods.animateScroll($(this), $(this).attr("data-offset"), 'up');
+                                return false; //break
+                            }
+
+                        });
+                    }
+
+                } else if(key == 40) { //down
+
+                    e.preventDefault();
+
+                    if(!$("body").hasClass('scrolling')) {
+
+                        $("body").addClass('scrolling');
+
+                        var allFinished = true;
+
+                        $(params.selector).each(function() {
+
+                            if(Math.round($(this).attr("data-offset"))>Math.round(st)) {
+
+                                allFinished = false;
+                                methods.animateScroll($(this), $(this).attr("data-offset"), 'down');
+                                return false; //break
+                            }
+
+                        });
+
+                        if(allFinished) $("html,body").stop().removeClass('scrolling');
+                    }
+                }
+
+            });
+
+    };
+    
 })(jQuery);
